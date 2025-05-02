@@ -5,16 +5,17 @@ import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Loader from "./components/Loader/Loader";
 import LoadMoreButton from "./components/LoadMoreButton/LoadMoreButton";
 import SearchBar from "./components/SearchBar/SearchBar";
-import { Photo } from "./types";
+import { ErrorResponse, Photo } from "./types";
 import { getPhotos } from "./components/apifetcher";
 import ModalImage from "./components/ModalImage/ModalImage";
+import { AxiosError } from "axios";
 
 function App() {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [pictures, setPictures] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [modalImage, setModalImage] = useState<Photo | null>(null);
@@ -29,8 +30,17 @@ function App() {
         return;
       }
       setTotalPages(totalPages);
-    } catch (err1) {
-      setError(err.message);
+    } catch (err) {
+      const axiosError = err as AxiosError<ErrorResponse>;
+      if (axiosError.response) {
+        setError(
+          axiosError.response.data?.message || "Server responded with an error"
+        );
+      } else if (axiosError.request) {
+        setError("No response received from server");
+      } else {
+        setError(axiosError.message);
+      }
     } finally {
       setIsLoading(false);
     }

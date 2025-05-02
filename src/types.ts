@@ -12,3 +12,7 @@ export interface Photo {
   src?: string;
   alt?: string;
 }
+
+export interface ErrorResponse {
+  message: string;
+}
