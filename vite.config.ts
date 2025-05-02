@@ -4,11 +4,5 @@ import Checker from "vite-plugin-checker";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    Checker({
-      typescript: true,
-      overlay: false,
-    }),
-  ],
+  plugins: [react()],
 });
