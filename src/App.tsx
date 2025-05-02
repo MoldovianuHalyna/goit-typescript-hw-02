@@ -12,7 +12,7 @@ import ModalImage from "./components/ModalImage/ModalImage";
 function App() {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const [pictures, setPictures] = useState<Photo[]>([]);
+  const [pictures, setPictures] = useState<Photo>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [totalPages, setTotalPages] = useState<number>(0);
