@@ -29,7 +29,7 @@ function App() {
         return;
       }
       setTotalPages(totalPages);
-    } catch (err: any) {
+    } catch (err1) {
       setError(err.message);
     } finally {
       setIsLoading(false);
